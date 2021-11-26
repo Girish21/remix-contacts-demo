@@ -1,0 +1,55 @@
+.container__img__wrapper {
+  --shadow-color: 0deg 0% 68%;
+  --shadow-elevation-medium: 0.3px 0.5px 0.4px hsl(var(--shadow-color) / 0.81),
+    0.8px 1.6px 1.3px -2.5px hsl(var(--shadow-color) / 0.54),
+    4.6px 9.3px 7.8px -5px hsl(var(--shadow-color) / 0.27);
+
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: hsl(var(--foreground));
+  padding: 1rem;
+  border-radius: 9999px;
+  box-shadow: var(--shadow-elevation-medium);
+}
+
+.container__form__wrapper {
+  padding: 64px 36px 0;
+}
+
+label {
+  color: var(--gray-500);
+  font-size: 1rem;
+}
+
+input {
+  border: none;
+  outline: none;
+  background-color: var(--gray-50);
+  color: var(--gray-700);
+  padding: 16px 12px;
+  font-size: 1.35rem;
+  border-radius: 12px;
+}
+
+input:active,
+input:focus {
+  box-shadow: var(--ring);
+}
+
+button {
+  background-color: hsl(var(--secondary));
+  border: 0;
+  outline: 0;
+  padding: 12px 8px;
+  color: hsl(var(--foreground));
+  font-size: 1.35rem;
+  border-radius: 12px;
+}
+
+button:active,
+button:focus {
+  --ring-color: var(--secondary);
+  box-shadow: var(--ring);
+}
