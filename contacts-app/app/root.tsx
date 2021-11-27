@@ -1,14 +1,8 @@
 import { LinksFunction, Scripts } from 'remix'
-import {
-  LiveReload,
-  Links,
-  Outlet,
-  Meta,
-  ScrollRestoration,
-  useCatch,
-} from 'remix'
+import { LiveReload, Links, Outlet, Meta, useCatch } from 'remix'
 
 import globalStyles from '~/styles/global.css'
+import darkStyles from '~/styles/dark.css'
 import fontStyles from '~/styles/font.css'
 
 export const links: LinksFunction = () => {
@@ -16,6 +10,11 @@ export const links: LinksFunction = () => {
     { rel: 'icon', href: '/favicon.ico' },
     { rel: 'stylesheet', href: fontStyles },
     { rel: 'stylesheet', href: globalStyles },
+    {
+      rel: 'stylesheet',
+      href: darkStyles,
+      media: '(prefers-color-scheme: dark)',
+    },
     {
       rel: 'prelaod',
       as: 'font',

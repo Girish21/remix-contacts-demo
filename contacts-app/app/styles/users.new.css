@@ -1,9 +1,4 @@
 .container__img__wrapper {
-  --shadow-color: 0deg 0% 68%;
-  --shadow-elevation-medium: 0.3px 0.5px 0.4px hsl(var(--shadow-color) / 0.81),
-    0.8px 1.6px 1.3px -2.5px hsl(var(--shadow-color) / 0.54),
-    4.6px 9.3px 7.8px -5px hsl(var(--shadow-color) / 0.27);
-
   position: absolute;
   top: 0;
   left: 50%;
@@ -11,7 +6,7 @@
   background-color: hsl(var(--foreground));
   padding: 1rem;
   border-radius: 9999px;
-  box-shadow: var(--shadow-elevation-medium);
+  box-shadow: var(--banner-shadow-elevation-medium);
 }
 
 .container__form__wrapper {
@@ -19,15 +14,15 @@
 }
 
 label {
-  color: var(--gray-500);
+  color: var(--color-sub-heading);
   font-size: 1rem;
 }
 
 input {
   border: none;
   outline: none;
-  background-color: var(--gray-50);
-  color: var(--gray-700);
+  background-color: var(--color-input-background);
+  color: var(--color-heading);
   padding: 16px 12px;
   font-size: 1.35rem;
   border-radius: 12px;
@@ -43,13 +38,12 @@ button {
   border: 0;
   outline: 0;
   padding: 12px 8px;
-  color: hsl(var(--foreground));
+  color: hsl(var(--color-button));
   font-size: 1.35rem;
   border-radius: 12px;
 }
 
 button:active,
 button:focus {
-  --ring-color: var(--secondary);
   box-shadow: var(--ring);
 }

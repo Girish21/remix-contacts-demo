@@ -24,11 +24,11 @@ a:focus-visible > li {
 
 li h3 {
   font-weight: 500;
-  color: var(--gray-700);
+  color: var(--color-sub-heading);
 }
 
 li em {
-  color: var(--gray-500);
+  color: var(--color-em);
 }
 
 a + a {
@@ -117,7 +117,7 @@ a + a {
 }
 
 .container__link {
-  color: var(--gray-500);
+  color: var(--color-link);
   width: fit-content;
 }
 
@@ -133,7 +133,12 @@ a + a {
   font-size: 1.125rem;
 }
 
+.container__link--new {
+  color: var(--color-link);
+}
+
 .container__link--back {
+  color: var(--color-link);
   position: absolute;
   display: flex;
   align-items: center;

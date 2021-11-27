@@ -23,6 +23,13 @@
   --gray-800: #1f2937;
   --gray-900: #111827;
 
+  --color-heading: var(--gray-700);
+  --color-sub-heading: var(--gray-500);
+  --color-em: var(--gray-500);
+  --color-link: var(--gray-500);
+  --color-input-background: var(--gray-50);
+  --color-button: var(--foreground);
+
   --ring-gap: 4px;
   --ring-width: 2px;
   --ring-color: var(--primary);
@@ -48,6 +55,12 @@
     -0.1px 18.5px 20.8px -1.9px hsl(var(--shadow-color) / 0.21),
     -0.1px 25.5px 28.7px -2.2px hsl(var(--shadow-color) / 0.21),
     -0.2px 34.3px 38.6px -2.5px hsl(var(--shadow-color) / 0.21);
+
+  --banner-shadow-color: 0deg 0% 68%;
+  --banner-shadow-elevation-medium: 0.3px 0.5px 0.4px
+      hsl(var(--banner-shadow-color) / 0.81),
+    0.8px 1.6px 1.3px -2.5px hsl(var(--banner-shadow-color) / 0.54),
+    4.6px 9.3px 7.8px -5px hsl(var(--banner-shadow-color) / 0.27);
 }
 
 *:focus:not(:focus-visible) {
@@ -164,7 +177,7 @@ li {
 }
 
 .heading--2xl {
-  color: var(--gray-700);
+  color: var(--color-heading);
   font-size: var(--heading-2xl);
   font-weight: 500;
 }
