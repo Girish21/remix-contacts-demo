@@ -1,16 +1,18 @@
-import { Outlet, json, useCatch, Link, useLoaderData } from 'remix'
+import { Outlet, json, useCatch, NavLink, useLoaderData } from 'remix'
 import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix'
 
 import prisma from '~/db.server'
 
 import { response } from '~/types'
-import ArrowRight from '~/components/arrow-right'
 
 import usersStyles from '../styles/users.css'
+import FourOhFour from '~/components/four-oh-four'
 
 type User = {
   name: string
   id: string
+  email: string
+  avatar: string
 }
 
 export const meta: MetaFunction = () => {
@@ -24,8 +26,7 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: usersStyles }]
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
-  console.log(request.url)
+export const loader: LoaderFunction = async () => {
   const users = await prisma.user.findMany()
 
   if (!users || users.length === 0) {
@@ -40,14 +41,40 @@ export default function Users() {
 
   return (
     <main className='container'>
-      <section className='container__center'>
-        <h1 className='heading--2xl'>Users</h1>
-        <ul>
-          {users.map(({ name, id }) => (
-            <li key={id}>{name}</li>
-          ))}
-        </ul>
-        <Outlet />
+      <section className='h-full container__flex container__flex__space--equal container__flex--gap-6'>
+        <div className='container__center'>
+          <h2 className='heading--2xl'>Users</h2>
+          <ul>
+            {users.map(({ avatar, email, name, id }) => (
+              <NavLink
+                key={id}
+                to={id}
+                className={({ isActive }) =>
+                  isActive ? 'container__link--active' : ''
+                }
+              >
+                <li className='container__list__element container__flex--gap-6'>
+                  <img
+                    className='container__flex--self-center'
+                    src={avatar}
+                    alt=''
+                  />
+                  <div className='container__flex container__flex--column'>
+                    <h3 className='heading--md'>{name}</h3>
+                    <em>{email}</em>
+                  </div>
+                </li>
+              </NavLink>
+            ))}
+          </ul>
+        </div>
+        <div className='container__flex container__flex--column container__flex--justify-center'>
+          <div className='container__fixed'>
+            <div className='fixed__wrapper'>
+              <Outlet />
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   )
@@ -60,20 +87,12 @@ export const CatchBoundary = () => {
     case 404:
       return (
         <main className='container container--small container__flex container__flex--column container__flex--center'>
-          <section className='foreground container__banner container__flex container__flex--column container__flex--gap-4'>
-            <h1 className='heading--2xl container__heading--center'>
-              No users!
-            </h1>
-            <Link
-              to='new'
-              prefetch='intent'
-              title='Add new user'
-              className='container__link container__link--end'
-            >
-              Add new User <ArrowRight />
-            </Link>
-          </section>
+          <FourOhFour actionText='Add new User' title='No users!' />
         </main>
+      )
+    default:
+      throw new Error(
+        `Status of ${catchData.status} was not cought at Users CatchBoundary`
       )
   }
 }

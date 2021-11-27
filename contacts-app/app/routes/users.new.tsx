@@ -6,6 +6,7 @@ import {
   useLoaderData,
 } from 'remix'
 import { redirect } from 'remix'
+import UserForm from '~/components/user-form'
 
 import prisma from '~/db.server'
 import { response } from '~/types'
@@ -55,25 +56,7 @@ export default function NewUser() {
 
   return (
     <main className='container container--small container__flex container__flex--column container__flex--center'>
-      <section className='foreground container__banner'>
-        <form autoComplete='password' method='post'>
-          <div className='container__img__wrapper'>
-            <img height='64px' width='64px' src={iconUrl} />
-          </div>
-          <fieldset className='container__form__wrapper container__flex container__flex--column container__flex--gap-6'>
-            <div className='container__flex container__flex--column container__flex--gap-2'>
-              <label htmlFor='name'>Name</label>
-              <input autoComplete='off' id='name' name='name' required />
-            </div>
-            <div className='container__flex container__flex--column container__flex--gap-2'>
-              <label htmlFor='email'>Email</label>
-              <input autoComplete='off' id='email' name='email' required />
-            </div>
-            <input hidden defaultValue={iconUrl} name='avatar' />
-            <button>Create User</button>
-          </fieldset>
-        </form>
-      </section>
+      <UserForm iconUrl={iconUrl} />
     </main>
   )
 }

@@ -1,3 +1,40 @@
+ul {
+  padding-bottom: 24px;
+}
+
+li {
+  background-color: hsl(var(--foreground));
+  padding: 12px 16px;
+  box-shadow: var(--shadow-elevation-medium);
+  border-radius: 12px;
+}
+
+a {
+  display: block;
+}
+
+a:focus,
+a:focus-visible {
+  outline: none;
+}
+
+a:focus-visible > li {
+  box-shadow: var(--ring);
+}
+
+li h3 {
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+li em {
+  color: var(--gray-500);
+}
+
+a + a {
+  margin-top: 1rem;
+}
+
 .container {
   --container-width: 1024px;
   height: 100%;
@@ -13,6 +50,10 @@
   --container-width: 412px;
 }
 
+.container__fixed {
+  position: fixed;
+}
+
 .container__flex {
   display: flex;
 }
@@ -24,6 +65,10 @@
 .container__flex--center {
   justify-content: center;
   align-items: center;
+}
+
+.container__flex--justify-center {
+  justify-content: center;
 }
 
 .container__flex--gap-2 {
@@ -38,8 +83,16 @@
   gap: 1.5rem;
 }
 
+.container__flex__space--equal > * {
+  flex: 1;
+}
+
+.container__flex--self-center {
+  align-self: center;
+}
+
 .container__center {
-  padding-top: calc(50vh - var(--heading-2xl) - 2rem);
+  padding-top: calc(30vh - var(--heading-2xl) - 2rem);
 }
 
 .container__content {
@@ -66,4 +119,21 @@
 
 .container__link--end {
   align-self: flex-end;
+}
+
+.container__link--active > li {
+  box-shadow: var(--ring);
+}
+
+.container__list__element {
+  display: flex;
+}
+
+.container__list__element img {
+  height: 36px;
+  width: 36px;
+}
+
+.fixed__wrapper {
+  width: min(100%, 400px);
 }
