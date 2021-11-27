@@ -53,7 +53,6 @@ const Document = ({
         {children}
         {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
         <Scripts />
-        <ScrollRestoration />
       </body>
     </html>
   )

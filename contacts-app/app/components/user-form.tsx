@@ -1,4 +1,7 @@
+import type { Errors } from '~/types'
+
 type UserFormPops = {
+  errors?: Errors
   initialEmail?: string
   initialName?: string
   iconUrl: string
@@ -6,6 +9,7 @@ type UserFormPops = {
 }
 
 const UserForm = ({
+  errors,
   initialEmail,
   initialName,
   iconUrl,
@@ -27,6 +31,7 @@ const UserForm = ({
               defaultValue={initialName}
               required
             />
+            {errors?.name ? <p>{errors.name}</p> : null}
           </div>
           <div className='container__flex container__flex--column container__flex--gap-2'>
             <label htmlFor='email'>Email</label>
@@ -38,6 +43,7 @@ const UserForm = ({
               defaultValue={initialEmail}
               required
             />
+            {errors?.email ? <p>{errors.email}</p> : null}
           </div>
           <input hidden defaultValue={iconUrl} name='avatar' />
           <button>{submitbuttonText}</button>

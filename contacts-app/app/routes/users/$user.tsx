@@ -1,11 +1,20 @@
 import type { User } from '@prisma/client'
-import type { LoaderFunction, LinksFunction, MetaFunction } from 'remix'
+import {
+  ActionFunction,
+  LoaderFunction,
+  LinksFunction,
+  MetaFunction,
+  useActionData,
+  useLocation,
+} from 'remix'
 import { redirect, json, useCatch, useLoaderData } from 'remix'
-import FourOhFour from '~/components/four-oh-four'
+import BackLink from '~/components/back-link'
+import Catch from '~/components/catch'
 import UserForm from '~/components/user-form'
 import prisma from '~/db.server'
 
 import createUserStyles from '~/styles/users.new.css'
+import type { Errors } from '~/types'
 
 export const meta: MetaFunction = ({ data }) => {
   if (!data) {
@@ -16,6 +25,35 @@ export const meta: MetaFunction = ({ data }) => {
 
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: createUserStyles }]
+}
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const userId = params.user
+  const formData = await request.formData()
+
+  const name = formData.get('name')
+  const email = formData.get('email')
+
+  const errors: Errors = {}
+
+  if (!name) {
+    errors.name = 'Please provide a name'
+  }
+
+  if (!email) {
+    errors.email = 'Please provide an email'
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors }
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { name: name?.toString(), email: email?.toString() },
+  })
+
+  throw redirect(`/users/${userId}`)
 }
 
 export const loader: LoaderFunction = async ({ params }) => {
@@ -34,16 +72,21 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function User() {
   const data = useLoaderData<User>()
+  const errors = useActionData<{ errors: Errors }>()
+  const location = useLocation()
 
   return (
-    <>
+    <div className='relative'>
+      <BackLink className='container__link--back' />
       <UserForm
+        key={location.key}
         iconUrl={data.avatar}
         initialEmail={data.email}
         initialName={data.name}
         submitbuttonText='Update User'
+        errors={errors?.errors}
       />
-    </>
+    </div>
   )
 }
 
@@ -53,7 +96,7 @@ export const CatchBoundary = () => {
   switch (catchData.status) {
     case 404:
       return (
-        <FourOhFour
+        <Catch
           actionText='Add new User'
           title='Sorry could not find the user'
         />

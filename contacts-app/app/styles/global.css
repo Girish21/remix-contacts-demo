@@ -151,6 +151,14 @@ li {
   display: none;
 }
 
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
 .foreground {
   background-color: hsl(var(--foreground));
 }

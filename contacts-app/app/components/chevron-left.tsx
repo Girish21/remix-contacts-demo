@@ -1,4 +1,4 @@
-export default function AddIcon() {
+export default function ChevronLeft() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -11,7 +11,7 @@ export default function AddIcon() {
         strokeLinecap='round'
         strokeLinejoin='round'
         strokeWidth={2}
-        d='M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z'
+        d='M15 19l-7-7 7-7'
       />
     </svg>
   )
