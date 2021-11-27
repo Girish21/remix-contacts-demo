@@ -3,9 +3,11 @@ import {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
+  MetaFunction,
   useLoaderData,
 } from 'remix'
 import { redirect } from 'remix'
+import BackLink from '~/components/back-link'
 import UserForm from '~/components/user-form'
 
 import prisma from '~/db.server'
@@ -16,6 +18,10 @@ import createUserStyles from '../styles/users.new.css'
 
 type LoaderData = {
   iconUrl: string
+}
+
+export const meta: MetaFunction = () => {
+  return { title: 'Add new User' }
 }
 
 export const links: LinksFunction = () => {
@@ -56,7 +62,10 @@ export default function NewUser() {
 
   return (
     <main className='container container--small container__flex container__flex--column container__flex--center'>
-      <UserForm iconUrl={iconUrl} />
+      <div className='relative'>
+        <BackLink className='container__link--back' to='/users' />
+        <UserForm iconUrl={iconUrl} />
+      </div>
     </main>
   )
 }
