@@ -16,11 +16,18 @@ import prisma from '~/db.server'
 import createUserStyles from '~/styles/users.new.css'
 import type { Errors } from '~/types'
 
+type LoaderData = {
+  user: User
+}
+
 export const meta: MetaFunction = ({ data }) => {
   if (!data) {
     return { title: 'Uh-Oh!', description: 'No user found' }
   }
-  return { title: data.name, description: `Details for user ${data.name}` }
+  return {
+    title: (data as LoaderData).user.name,
+    description: `Details for user ${(data as LoaderData).user.name}`,
+  }
 }
 
 export const links: LinksFunction = () => {
@@ -67,11 +74,13 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw json({ message: 'User not found' }, { status: 404 })
   }
 
-  return user
+  const loaderData: LoaderData = { user }
+
+  return loaderData
 }
 
 export default function User() {
-  const data = useLoaderData<User>()
+  const { user } = useLoaderData<LoaderData>()
   const errors = useActionData<{ errors: Errors }>()
   const location = useLocation()
 
@@ -80,9 +89,9 @@ export default function User() {
       <BackLink className='container__link--back' />
       <UserForm
         key={location.key}
-        iconUrl={data.avatar}
-        initialEmail={data.email}
-        initialName={data.name}
+        iconUrl={user.avatar}
+        initialEmail={user.email}
+        initialName={user.name}
         submitbuttonText='Update User'
         errors={errors?.errors}
       />

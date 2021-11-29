@@ -11,7 +11,6 @@ import BackLink from '~/components/back-link'
 import UserForm from '~/components/user-form'
 
 import prisma from '~/db.server'
-import { response } from '~/types'
 
 import usersStyles from '../styles/users.css'
 import createUserStyles from '../styles/users.new.css'
@@ -52,9 +51,11 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export const loader: LoaderFunction = () => {
-  return response<LoaderData>({
+  const loaderData: LoaderData = {
     iconUrl: `https://avatars.dicebear.com/api/identicon/${Math.random()}.svg`,
-  })
+  }
+
+  return loaderData
 }
 
 export default function NewUser() {

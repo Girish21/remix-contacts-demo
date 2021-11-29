@@ -5,8 +5,6 @@ import prisma from '~/db.server'
 
 import Catch from '~/components/catch'
 
-import { response } from '~/types'
-
 import usersStyles from '../styles/users.css'
 import usersMdStyles from '../styles/users.md.css'
 import usersLgStyles from '../styles/users.lg.css'
@@ -17,6 +15,10 @@ type User = {
   id: string
   email: string
   avatar: string
+}
+
+type LoaderData = {
+  users: User[]
 }
 
 export const meta: MetaFunction = () => {
@@ -41,11 +43,13 @@ export const loader: LoaderFunction = async () => {
     throw json({ message: 'No user exist' }, { status: 404 })
   }
 
-  return response<User[]>(users)
+  const loaderData: LoaderData = { users }
+
+  return loaderData
 }
 
 export default function Users() {
-  const users = useLoaderData<User[]>()
+  const { users } = useLoaderData<LoaderData>()
 
   return (
     <main className='container'>
