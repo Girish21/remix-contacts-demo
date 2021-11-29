@@ -9,6 +9,18 @@ import usersStyles from '../styles/users.css'
 import usersMdStyles from '../styles/users.md.css'
 import usersLgStyles from '../styles/users.lg.css'
 import NewUser from '~/components/new-user'
+import {
+  Card,
+  Emphasis,
+  Header,
+  Image,
+  List,
+  PageCenterContainer,
+  SecondaryTitle,
+  Title,
+  UsersPage,
+  UsersSection,
+} from '~/components/containers'
 
 type User = {
   name: string
@@ -52,46 +64,38 @@ export default function Users() {
   const { users } = useLoaderData<LoaderData>()
 
   return (
-    <main className='container'>
-      <section className='h-full container__flex container__flex__space--equal container__flex--gap-6'>
-        <div className='container__center'>
-          <div className='container__flex container__flex--align-baseline container__flex--justify-between'>
-            <h2 className='heading--2xl'>Users</h2>
-            <NewUser />
-          </div>
-          <ul>
-            {users.map(({ avatar, email, name, id }) => (
-              <NavLink
-                key={id}
-                to={id}
-                className={({ isActive }) =>
-                  isActive ? 'container__link--active' : ''
-                }
-              >
-                <li className='container__list__element container__flex--gap-6'>
-                  <img
-                    className='container__flex--self-center'
-                    src={avatar}
-                    alt=''
-                  />
-                  <div className='container__flex container__flex--column'>
-                    <h3 className='heading--md'>{name}</h3>
-                    <em>{email}</em>
-                  </div>
-                </li>
-              </NavLink>
-            ))}
-          </ul>
-        </div>
-        <div className='container__flex container__flex--column container__flex--center'>
-          <div className='container__fixed'>
-            <div className='fixed__wrapper'>
-              <Outlet />
-            </div>
+    <UsersPage>
+      <UsersSection>
+        <Header>
+          <Title>Users</Title>
+          <NewUser />
+        </Header>
+        <List>
+          {users.map(({ avatar, email, name, id }) => (
+            <NavLink
+              key={id}
+              to={id}
+              className={({ isActive }) =>
+                isActive ? 'container__link--active' : ''
+              }
+            >
+              <Card>
+                <Image src={avatar} />
+                <SecondaryTitle>{name}</SecondaryTitle>
+                <Emphasis>{email}</Emphasis>
+              </Card>
+            </NavLink>
+          ))}
+        </List>
+      </UsersSection>
+      <div className='container__flex container__flex--column container__flex--center'>
+        <div className='container__fixed'>
+          <div className='fixed__wrapper'>
+            <Outlet />
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </UsersPage>
   )
 }
 
@@ -101,9 +105,9 @@ export const CatchBoundary = () => {
   switch (catchData.status) {
     case 404:
       return (
-        <main className='container container--small container__flex container__flex--column container__flex--center'>
+        <PageCenterContainer>
           <Catch actionText='Add new User' title='No users!' />
-        </main>
+        </PageCenterContainer>
       )
     default:
       throw new Error(

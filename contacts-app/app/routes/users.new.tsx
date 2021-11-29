@@ -8,6 +8,7 @@ import {
 } from 'remix'
 import { redirect } from 'remix'
 import BackLink from '~/components/back-link'
+import { PageCenterContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
 
 import prisma from '~/db.server'
@@ -62,11 +63,11 @@ export default function NewUser() {
   const { iconUrl } = useLoaderData<LoaderData>()
 
   return (
-    <main className='container container--small container__flex container__flex--column container__flex--center'>
+    <PageCenterContainer>
       <div className='relative'>
         <BackLink className='container__link--back' to='/users' />
         <UserForm iconUrl={iconUrl} />
       </div>
-    </main>
+    </PageCenterContainer>
   )
 }
