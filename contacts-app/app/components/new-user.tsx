@@ -3,7 +3,11 @@ import AddIcon from './add-icon'
 
 const NewUser = () => {
   return (
-    <Link to='/users/new' className='container__link--new container__link--md'>
+    <Link
+      to='/users/new'
+      prefetch='intent'
+      className='container__link--new container__link--md'
+    >
       Add User <AddIcon />
     </Link>
   )
