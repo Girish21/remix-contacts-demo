@@ -24,7 +24,7 @@ const Image = ({ src }: { src: string }) => {
   return <img className='container__flex--self-center' src={src} alt='' />
 }
 
-const Header: React.FunctionComponent<Never> = ({ children }) => {
+const SectionHeader: React.FunctionComponent<Never> = ({ children }) => {
   return (
     <div
       className='container__flex container__flex--align-baseline container__flex--justify-between'
@@ -75,6 +75,16 @@ const UsersPage: React.FunctionComponent<Never> = ({ children }) => {
   )
 }
 
+const UserEditSection: React.FunctionComponent<Never> = ({ children }) => {
+  return (
+    <div className='container__flex container__flex--column container__flex--center'>
+      <div className='container__fixed'>
+        <div className='fixed__wrapper'>{children}</div>
+      </div>
+    </div>
+  )
+}
+
 const UsersSection: React.FunctionComponent<Never> = ({ children }) => {
   return <div className='container__center' children={children} />
 }
@@ -82,14 +92,15 @@ const UsersSection: React.FunctionComponent<Never> = ({ children }) => {
 export {
   Card,
   Emphasis,
-  Header,
   Image,
   List,
   MainSection,
   PageCenterContainer,
   PageContainer,
   SecondaryTitle,
+  SectionHeader,
   Title,
   UsersPage,
+  UserEditSection,
   UsersSection,
 }

@@ -1,26 +1,24 @@
-import { Outlet, json, useCatch, NavLink, useLoaderData } from 'remix'
 import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix'
-
-import prisma from '~/db.server'
-
+import { json, NavLink, Outlet, useCatch, useLoaderData } from 'remix'
 import Catch from '~/components/catch'
-
-import usersStyles from '../styles/users.css'
-import usersMdStyles from '../styles/users.md.css'
-import usersLgStyles from '../styles/users.lg.css'
-import NewUser from '~/components/new-user'
 import {
   Card,
   Emphasis,
-  Header,
   Image,
   List,
   PageCenterContainer,
   SecondaryTitle,
+  SectionHeader,
   Title,
+  UserEditSection,
   UsersPage,
   UsersSection,
 } from '~/components/containers'
+import NewUser from '~/components/new-user'
+import prisma from '~/db.server'
+import usersStyles from '~/styles/users.css'
+import usersLgStyles from '~/styles/users.lg.css'
+import usersMdStyles from '~/styles/users.md.css'
 
 type User = {
   name: string
@@ -66,10 +64,10 @@ export default function Users() {
   return (
     <UsersPage>
       <UsersSection>
-        <Header>
+        <SectionHeader>
           <Title>Users</Title>
           <NewUser />
-        </Header>
+        </SectionHeader>
         <List>
           {users.map(({ avatar, email, name, id }) => (
             <NavLink
@@ -88,13 +86,9 @@ export default function Users() {
           ))}
         </List>
       </UsersSection>
-      <div className='container__flex container__flex--column container__flex--center'>
-        <div className='container__fixed'>
-          <div className='fixed__wrapper'>
-            <Outlet />
-          </div>
-        </div>
-      </div>
+      <UserEditSection>
+        <Outlet />
+      </UserEditSection>
     </UsersPage>
   )
 }
