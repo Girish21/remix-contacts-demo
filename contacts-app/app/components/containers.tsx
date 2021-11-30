@@ -59,6 +59,10 @@ const PageContainer: React.FunctionComponent<Never> = ({ children }) => {
   return <main className='container' children={children} />
 }
 
+const RelativeContainer: React.FunctionComponent<Never> = ({ children }) => {
+  return <div className='relative' children={children} />
+}
+
 const SecondaryTitle: React.FunctionComponent<Never> = ({ children }) => {
   return <h3 className='heading--md' children={children} />
 }
@@ -97,6 +101,7 @@ export {
   MainSection,
   PageCenterContainer,
   PageContainer,
+  RelativeContainer,
   SecondaryTitle,
   SectionHeader,
   Title,

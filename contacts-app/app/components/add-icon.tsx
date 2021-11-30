@@ -2,7 +2,7 @@ export default function AddIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      className='button__icon button__icon--md'
+      className='button__icon button__icon--lg'
       fill='none'
       viewBox='0 0 24 24'
       stroke='currentColor'

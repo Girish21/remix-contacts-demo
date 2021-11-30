@@ -1,12 +1,11 @@
 import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix'
 import { json, NavLink, Outlet, useCatch, useLoaderData } from 'remix'
-import Catch from '~/components/catch'
+import FourOhFour from '~/components/catch'
 import {
   Card,
   Emphasis,
   Image,
   List,
-  PageCenterContainer,
   SecondaryTitle,
   SectionHeader,
   Title,
@@ -98,11 +97,7 @@ export const CatchBoundary = () => {
 
   switch (catchData.status) {
     case 404:
-      return (
-        <PageCenterContainer>
-          <Catch actionText='Add new User' title='No users!' />
-        </PageCenterContainer>
-      )
+      return <FourOhFour actionText='Add new User' title='No Users!' />
     default:
       throw new Error(
         `Status of ${catchData.status} was not cought at Users CatchBoundary`

@@ -1,18 +1,15 @@
-import * as React from 'react'
 import {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
+  redirect,
   useLoaderData,
 } from 'remix'
-import { redirect } from 'remix'
 import BackLink from '~/components/back-link'
-import { PageCenterContainer } from '~/components/containers'
+import { PageCenterContainer, RelativeContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
-
 import prisma from '~/db.server'
-
 import usersStyles from '../styles/users.css'
 import createUserStyles from '../styles/users.new.css'
 
@@ -64,10 +61,10 @@ export default function NewUser() {
 
   return (
     <PageCenterContainer>
-      <div className='relative'>
-        <BackLink className='container__link--back' to='/users' />
+      <RelativeContainer>
+        <BackLink to='/users' />
         <UserForm iconUrl={iconUrl} />
-      </div>
+      </RelativeContainer>
     </PageCenterContainer>
   )
 }

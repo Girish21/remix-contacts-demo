@@ -6,7 +6,10 @@ type BackLinkProps = {
   to?: string
 }
 
-const BackLink = ({ to = '..', className }: BackLinkProps) => {
+const BackLink = ({
+  to = '..',
+  className = 'container__link--back',
+}: BackLinkProps) => {
   return (
     <Link to={to} className={className}>
       <ChevronLeft />

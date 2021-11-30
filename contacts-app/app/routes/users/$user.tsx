@@ -9,7 +9,8 @@ import {
 } from 'remix'
 import { redirect, json, useCatch, useLoaderData } from 'remix'
 import BackLink from '~/components/back-link'
-import Catch from '~/components/catch'
+import FourOhFour from '~/components/catch'
+import { RelativeContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
 import prisma from '~/db.server'
 
@@ -85,8 +86,8 @@ export default function User() {
   const location = useLocation()
 
   return (
-    <div className='relative'>
-      <BackLink className='container__link--back' />
+    <RelativeContainer>
+      <BackLink />
       <UserForm
         key={location.key}
         iconUrl={user.avatar}
@@ -95,7 +96,7 @@ export default function User() {
         submitbuttonText='Update User'
         errors={errors?.errors}
       />
-    </div>
+    </RelativeContainer>
   )
 }
 
@@ -105,9 +106,10 @@ export const CatchBoundary = () => {
   switch (catchData.status) {
     case 404:
       return (
-        <Catch
+        <FourOhFour
           actionText='Add new User'
           title='Sorry could not find the user'
+          variant='section'
         />
       )
     default:

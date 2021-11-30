@@ -1,9 +1,14 @@
 import { Link } from 'remix'
 import ArrowRight from '~/components/arrow-right'
+import { PageCenterContainer } from './containers'
 
 type CatchProps = {
   title: string
   actionText: string
+}
+
+type FourOhFourProps = CatchProps & {
+  variant?: 'full_page' | 'section'
 }
 
 const Container: React.FC = ({ children }) => {
@@ -35,4 +40,16 @@ const Catch = ({ actionText, title }: CatchProps) => {
   )
 }
 
-export default Catch
+const FourOhFour = ({ variant = 'full_page', ...rest }: FourOhFourProps) => {
+  if (variant === 'full_page') {
+    return (
+      <PageCenterContainer>
+        <Catch {...rest} />
+      </PageCenterContainer>
+    )
+  }
+
+  return <Catch {...rest} />
+}
+
+export default FourOhFour

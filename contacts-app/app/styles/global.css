@@ -210,6 +210,11 @@ li {
   width: 1.5rem;
 }
 
+.button__icon--lg {
+  height: 1.75rem;
+  width: 1.75rem;
+}
+
 .button__icon--2xl {
   height: 3rem;
   width: 3rem;
