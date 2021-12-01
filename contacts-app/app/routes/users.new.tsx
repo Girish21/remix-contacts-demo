@@ -3,13 +3,15 @@ import {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-  redirect,
-  useLoaderData,
+  useActionData,
 } from 'remix'
+import { redirect, useLoaderData } from 'remix'
+import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
 import { PageCenterContainer, RelativeContainer } from '~/components/containers'
-import UserForm from '~/components/user-form'
+import { Avatar, Error, Field, FieldSet, Section } from '~/components/form'
 import prisma from '~/db.server'
+import type { Errors } from '~/types'
 import usersStyles from '../styles/users.css'
 import createUserStyles from '../styles/users.new.css'
 
@@ -35,13 +37,22 @@ export const action: ActionFunction = async ({ request }) => {
   const email = formData.get('email')
   const avatar = formData.get('avatar')
 
-  if (!name || !email || !avatar) throw redirect('/users/new')
-  if (
-    typeof name !== 'string' ||
-    typeof email !== 'string' ||
-    typeof avatar !== 'string'
-  )
-    throw redirect('/users/new')
+  const errors: Errors = {}
+
+  if (!name) {
+    errors.name = 'Name is required'
+  }
+  if (!email) {
+    errors.email = 'Email is required'
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors }
+  }
+
+  invariant(typeof name === 'string')
+  invariant(typeof email === 'string')
+  invariant(typeof avatar === 'string')
 
   await prisma.user.create({ data: { avatar, email, name } })
 
@@ -58,12 +69,32 @@ export const loader: LoaderFunction = () => {
 
 export default function NewUser() {
   const { iconUrl } = useLoaderData<LoaderData>()
+  const actionData = useActionData<{ errors: Errors }>()
+  const errors = actionData?.errors
 
   return (
     <PageCenterContainer>
       <RelativeContainer>
         <BackLink to='/users' />
-        <UserForm iconUrl={iconUrl} />
+        <Section>
+          <form method='post' autoComplete='off'>
+            <Avatar iconUrl={iconUrl} />
+            <FieldSet>
+              <Field>
+                <label htmlFor='name'>Name</label>
+                <input name='name' id='name' required />
+                {errors?.name && <Error>{errors.name}</Error>}
+              </Field>
+              <Field>
+                <label htmlFor='email'>Email</label>
+                <input name='email' id='email' required />
+                {errors?.email && <Error>{errors.email}</Error>}
+              </Field>
+            </FieldSet>
+            <input hidden name='avatar' defaultValue={iconUrl} />
+            <button>Create User</button>
+          </form>
+        </Section>
       </RelativeContainer>
     </PageCenterContainer>
   )

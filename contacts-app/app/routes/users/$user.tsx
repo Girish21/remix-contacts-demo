@@ -1,19 +1,24 @@
 import type { User } from '@prisma/client'
-import {
+import type {
   ActionFunction,
-  LoaderFunction,
   LinksFunction,
+  LoaderFunction,
   MetaFunction,
+} from 'remix'
+import {
+  json,
+  redirect,
   useActionData,
+  useCatch,
+  useLoaderData,
   useLocation,
 } from 'remix'
-import { redirect, json, useCatch, useLoaderData } from 'remix'
+import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
 import FourOhFour from '~/components/catch'
 import { RelativeContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
 import prisma from '~/db.server'
-
 import createUserStyles from '~/styles/users.new.css'
 import type { Errors } from '~/types'
 
@@ -56,9 +61,12 @@ export const action: ActionFunction = async ({ request, params }) => {
     return { errors }
   }
 
+  invariant(typeof name === 'string')
+  invariant(typeof email === 'string')
+
   await prisma.user.update({
     where: { id: userId },
-    data: { name: name?.toString(), email: email?.toString() },
+    data: { name: name, email: email },
   })
 
   throw redirect(`/users/${userId}`)

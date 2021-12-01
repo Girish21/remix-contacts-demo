@@ -18,8 +18,8 @@ const Avatar = ({ iconUrl }: AvatarProps) => {
   )
 }
 
-const Error = ({ error }: ErrorProps) => {
-  return <>{error ? <p>{error}</p> : null}</>
+const Error: React.FunctionComponent<Never> = ({ children }) => {
+  return <p>{children}</p>
 }
 
 const FieldSet: React.FunctionComponent<

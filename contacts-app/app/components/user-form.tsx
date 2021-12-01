@@ -30,7 +30,7 @@ const UserForm = ({
               defaultValue={initialName}
               required
             />
-            <Error error={errors?.name} />
+            {errors?.name && <Error>{errors.name}</Error>}
           </Field>
           <Field>
             <label htmlFor='email'>Email</label>
@@ -42,7 +42,7 @@ const UserForm = ({
               defaultValue={initialEmail}
               required
             />
-            <Error error={errors?.email} />
+            {errors?.email && <Error>{errors.email}</Error>}
           </Field>
           <input hidden defaultValue={iconUrl} name='avatar' />
           <button>{submitbuttonText}</button>
