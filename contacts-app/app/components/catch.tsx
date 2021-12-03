@@ -43,7 +43,7 @@ const Catch = ({ actionText, title }: CatchProps) => {
 const FourOhFour = ({ variant = 'full_page', ...rest }: FourOhFourProps) => {
   if (variant === 'full_page') {
     return (
-      <PageCenterContainer>
+      <PageCenterContainer variant='small'>
         <Catch {...rest} />
       </PageCenterContainer>
     )

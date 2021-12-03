@@ -16,7 +16,7 @@ import {
 import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
 import FourOhFour from '~/components/catch'
-import { RelativeContainer } from '~/components/containers'
+import { FullWidthContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
 import prisma from '~/db.server'
 import createUserStyles from '~/styles/users.new.css'
@@ -94,7 +94,7 @@ export default function User() {
   const location = useLocation()
 
   return (
-    <RelativeContainer>
+    <FullWidthContainer>
       <BackLink />
       <UserForm
         key={location.key}
@@ -104,7 +104,7 @@ export default function User() {
         submitbuttonText='Update User'
         errors={errors?.errors}
       />
-    </RelativeContainer>
+    </FullWidthContainer>
   )
 }
 

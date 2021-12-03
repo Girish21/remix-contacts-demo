@@ -1,6 +1,10 @@
 import * as React from 'react'
+import clsx from 'clsx'
 
 type Never = Record<string, unknown>
+type PageCenterContainerProps = {
+  variant?: 'large' | 'medium' | 'small'
+}
 
 const Card: React.FunctionComponent<Never> = ({ children }) => {
   const childrens = React.Children.toArray(children)
@@ -46,21 +50,26 @@ const MainSection: React.FunctionComponent<Never> = ({ children }) => {
   )
 }
 
-const PageCenterContainer: React.FunctionComponent<Never> = ({ children }) => {
-  return (
-    <main
-      className='container container--small container__flex container__flex--column container__flex--center'
-      children={children}
-    />
-  )
-}
+const PageCenterContainer: React.FunctionComponent<PageCenterContainerProps> =
+  ({ children, variant = 'medium' }) => {
+    return (
+      <main
+        className={clsx(
+          'container container__flex container__flex--column container__flex--center',
+          variant === 'medium' && 'container--medium',
+          variant === 'small' && 'container--small'
+        )}
+        children={children}
+      />
+    )
+  }
 
 const PageContainer: React.FunctionComponent<Never> = ({ children }) => {
   return <main className='container' children={children} />
 }
 
-const RelativeContainer: React.FunctionComponent<Never> = ({ children }) => {
-  return <div className='relative' children={children} />
+const FullWidthContainer: React.FunctionComponent<Never> = ({ children }) => {
+  return <div className='relative w-full' children={children} />
 }
 
 const SecondaryTitle: React.FunctionComponent<Never> = ({ children }) => {
@@ -101,7 +110,7 @@ export {
   MainSection,
   PageCenterContainer,
   PageContainer,
-  RelativeContainer,
+  FullWidthContainer,
   SecondaryTitle,
   SectionHeader,
   Title,

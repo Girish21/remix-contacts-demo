@@ -3,17 +3,23 @@ import {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
+  redirect,
   useActionData,
+  useLoaderData,
 } from 'remix'
-import { redirect, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
-import { PageCenterContainer, RelativeContainer } from '~/components/containers'
+import {
+  FullWidthContainer,
+  PageCenterContainer,
+} from '~/components/containers'
 import { Avatar, Error, Field, FieldSet, Section } from '~/components/form'
 import prisma from '~/db.server'
+import usersStyles from '~/styles/users.css'
+import usersLgStyles from '~/styles/users.lg.css'
+import usersMdStyles from '~/styles/users.md.css'
+import createUserStyles from '~/styles/users.new.css'
 import type { Errors } from '~/types'
-import usersStyles from '../styles/users.css'
-import createUserStyles from '../styles/users.new.css'
 
 type LoaderData = {
   iconUrl: string
@@ -27,6 +33,8 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: usersStyles },
     { rel: 'stylesheet', href: createUserStyles },
+    { rel: 'stylesheet', href: usersMdStyles, media: '(min-width: 720px)' },
+    { rel: 'stylesheet', href: usersLgStyles, media: '(min-width: 1024px)' },
   ]
 }
 
@@ -74,7 +82,7 @@ export default function NewUser() {
 
   return (
     <PageCenterContainer>
-      <RelativeContainer>
+      <FullWidthContainer>
         <BackLink to='/users' />
         <Section>
           <form method='post' autoComplete='off'>
@@ -90,12 +98,12 @@ export default function NewUser() {
                 <input name='email' id='email' required />
                 {errors?.email && <Error>{errors.email}</Error>}
               </Field>
+              <input hidden name='avatar' defaultValue={iconUrl} />
+              <button>Create User</button>
             </FieldSet>
-            <input hidden name='avatar' defaultValue={iconUrl} />
-            <button>Create User</button>
           </form>
         </Section>
-      </RelativeContainer>
+      </FullWidthContainer>
     </PageCenterContainer>
   )
 }
