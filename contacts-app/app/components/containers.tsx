@@ -28,15 +28,6 @@ const Image = ({ src }: { src: string }) => {
   return <img className='container__flex--self-center' src={src} alt='' />
 }
 
-const SectionHeader: React.FunctionComponent<Never> = ({ children }) => {
-  return (
-    <div
-      className='container__flex container__flex--align-baseline container__flex--justify-between'
-      children={children}
-    />
-  )
-}
-
 const List: React.FunctionComponent<Never> = ({ children }) => {
   return <ul children={children} />
 }
@@ -45,6 +36,15 @@ const MainSection: React.FunctionComponent<Never> = ({ children }) => {
   return (
     <section
       className='h-full container__flex container__flex__space--equal container__flex--gap-6'
+      children={children}
+    />
+  )
+}
+
+const MessageContainer: React.FunctionComponent<Never> = ({ children }) => {
+  return (
+    <section
+      className='foreground container__banner container__flex container__flex--column container__flex--gap-4'
       children={children}
     />
   )
@@ -76,8 +76,22 @@ const SecondaryTitle: React.FunctionComponent<Never> = ({ children }) => {
   return <h3 className='heading--md' children={children} />
 }
 
+const SectionHeader: React.FunctionComponent<Never> = ({ children }) => {
+  return (
+    <div
+      className='container__flex container__flex--align-center container__flex--justify-between'
+      children={children}
+    />
+  )
+}
+
 const Title: React.FunctionComponent<Never> = ({ children }) => {
-  return <h2 className='heading--2xl' children={children} />
+  return (
+    <h2
+      className='heading--2xl container__flex--self-center'
+      children={children}
+    />
+  )
 }
 
 const UsersPage: React.FunctionComponent<Never> = ({ children }) => {
@@ -99,7 +113,12 @@ const UserEditSection: React.FunctionComponent<Never> = ({ children }) => {
 }
 
 const UsersSection: React.FunctionComponent<Never> = ({ children }) => {
-  return <div className='container__center' children={children} />
+  return (
+    <div
+      className='container__center container__flex container__flex--column container__flex--gap-2'
+      children={children}
+    />
+  )
 }
 
 export {
@@ -108,6 +127,7 @@ export {
   Image,
   List,
   MainSection,
+  MessageContainer,
   PageCenterContainer,
   PageContainer,
   FullWidthContainer,

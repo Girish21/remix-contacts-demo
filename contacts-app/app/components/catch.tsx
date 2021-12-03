@@ -1,6 +1,6 @@
 import { Link } from 'remix'
 import ArrowRight from '~/components/arrow-right'
-import { PageCenterContainer } from './containers'
+import { MessageContainer, PageCenterContainer, Title } from './containers'
 
 type CatchProps = {
   title: string
@@ -11,24 +11,10 @@ type FourOhFourProps = CatchProps & {
   variant?: 'full_page' | 'section'
 }
 
-const Container: React.FC = ({ children }) => {
-  return (
-    <section className='foreground container__banner container__flex container__flex--column container__flex--gap-4'>
-      {children}
-    </section>
-  )
-}
-
-const Heading: React.FC = ({ children }) => {
-  return (
-    <h3 className='heading--2xl container__flex--self-center'>{children}</h3>
-  )
-}
-
 const Catch = ({ actionText, title }: CatchProps) => {
   return (
-    <Container>
-      <Heading>{title}</Heading>
+    <MessageContainer>
+      <Title>{title}</Title>
       <Link
         to='/users/new'
         prefetch='intent'
@@ -36,7 +22,7 @@ const Catch = ({ actionText, title }: CatchProps) => {
       >
         {actionText} <ArrowRight />
       </Link>
-    </Container>
+    </MessageContainer>
   )
 }
 
