@@ -4,27 +4,21 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from 'remix'
-import { Form, redirect, useActionData, useLoaderData } from 'remix'
-import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
 import {
   FullWidthContainer,
-  Loader,
   PageCenterContainer,
 } from '~/components/containers'
-import { Avatar, Error, Field, FieldSet, Section } from '~/components/form'
-import prisma from '~/db.server'
-import useFocus from '~/hooks/useFocus'
-import useInTransition from '~/hooks/useInTransition'
+import { Section } from '~/components/form'
 import usersStyles from '~/styles/users.css'
 import usersLgStyles from '~/styles/users.lg.css'
 import usersMdStyles from '~/styles/users.md.css'
 import createUserStyles from '~/styles/users.new.css'
 import type { Errors } from '~/types'
 
-type LoaderData = {
-  iconUrl: string
-}
+type LoaderData = { iconUrl: string }
+
+type ActionData = { errors: Errors }
 
 export const meta: MetaFunction = () => {
   return { title: 'Add new User' }
@@ -39,33 +33,39 @@ export const links: LinksFunction = () => {
   ]
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData()
-
-  const name = formData.get('name')
-  const email = formData.get('email')
-  const avatar = formData.get('avatar')
-
-  const errors: Errors = {}
-
-  if (!name) {
-    errors.name = 'Name is required'
-  }
-  if (!email) {
-    errors.email = 'Email is required'
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return { errors }
-  }
-
-  invariant(typeof name === 'string')
-  invariant(typeof email === 'string')
-  invariant(typeof avatar === 'string')
-
-  await prisma.user.create({ data: { avatar, email, name } })
-
-  throw redirect('/users')
+/**
+ * action function handles all the non-GET
+ * data mutations and other action request.
+ *
+ * This function runs on the server.
+ *
+ * One of the unique feature of Remix is
+ * automatic data validation after a mutation
+ * (we'll look at this in more detail in the next section).
+ *
+ * When a action is called, all the loaders of the routes
+ * on the screen are called, fetching fresh data from DB!
+ */
+export const action: ActionFunction = () => {
+  /**
+   * let's handle form submission
+   */
+  /**
+   * 1) get the form data from the request
+   */
+  /**
+   * 2) extract the required form fields
+   */
+  /**
+   * 3) run validations on the form data, and return on error
+   */
+  /**
+   * 4) create a new record
+   */
+  /**
+   * 5) return a redirect
+   */
+  return {}
 }
 
 export const loader: LoaderFunction = () => {
@@ -77,38 +77,20 @@ export const loader: LoaderFunction = () => {
 }
 
 export default function NewUser() {
-  const focusRef = useFocus<HTMLInputElement>()
-
-  const { iconUrl } = useLoaderData<LoaderData>()
-  const actionData = useActionData<{ errors: Errors }>()
-  const errors = actionData?.errors
-
-  const inTransition = useInTransition()
-
   return (
     <PageCenterContainer>
       <FullWidthContainer>
         <BackLink to='/users' />
         <Section>
-          <Form method='post' autoComplete='off'>
-            <Avatar iconUrl={iconUrl} />
-            <FieldSet disabled={inTransition}>
-              <Field>
-                <label htmlFor='name'>Name</label>
-                <input ref={focusRef} name='name' id='name' required />
-                {errors?.name && <Error>{errors.name}</Error>}
-              </Field>
-              <Field>
-                <label htmlFor='email'>Email</label>
-                <input name='email' id='email' required />
-                {errors?.email && <Error>{errors.email}</Error>}
-              </Field>
-              <input hidden name='avatar' defaultValue={iconUrl} />
-              <button>
-                {inTransition ? <Loader>Create User</Loader> : <>Create User</>}
-              </button>
-            </FieldSet>
-          </Form>
+          <form>
+            {/*
+             * 1) let's make the form submit to be a POST request
+             * 2) add `Avatar` component for avatar preview
+             * 3) add `FieldSet` component to wrap the form fields
+             *   i) create form `Field` for name and email
+             *   ii) show field errors, if exist
+             */}
+          </form>
         </Section>
       </FullWidthContainer>
     </PageCenterContainer>

@@ -1,22 +1,28 @@
 import type { LinksFunction } from 'remix'
-import { LiveReload, Links, Outlet, Meta, Scripts, useCatch } from 'remix'
+import { LiveReload, Links, Outlet, Meta, useCatch } from 'remix'
 
-import globalStyles from '~/styles/global.css'
-import darkStyles from '~/styles/dark.css'
-import fontStyles from '~/styles/font.css'
-import { RootBoundaryContainer, Title } from './components/containers'
-import FourOhFour from './components/catch'
+import { RootBoundaryContainer, Title } from '~/components/containers'
+import FourOhFour from '~/components/catch'
 
+/**
+ * links function specifies which `<link>` elements needs to be
+ * added to the page when the route is visited. When navigating
+ * away the `<link>` elements will be removed
+ *
+ * Here we're going to link the global stylesheets and
+ * preload custom fonts.
+ *
+ * Import stylesheet from
+ * ~/styles/global.css,
+ * ~/styles/font.css
+ * and add it as part of the links export
+ *
+ * Refer https://remix.run/docs/en/v1/api/conventions#links
+ * for more use cases of links export
+ */
 export const links: LinksFunction = () => {
   return [
     { rel: 'icon', href: '/favicon.ico' },
-    { rel: 'stylesheet', href: fontStyles },
-    { rel: 'stylesheet', href: globalStyles },
-    {
-      rel: 'stylesheet',
-      href: darkStyles,
-      media: '(prefers-color-scheme: dark)',
-    },
     {
       rel: 'prelaod',
       as: 'font',
@@ -52,13 +58,16 @@ const Document = ({
       </head>
       <body>
         {children}
-        <Scripts />
         {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
       </body>
     </html>
   )
 }
 
+/**
+ * Remix uses the default export from the routes module
+ * to render when the route matches
+ */
 export default function App() {
   return (
     <Document>

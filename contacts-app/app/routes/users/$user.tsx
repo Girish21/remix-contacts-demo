@@ -5,26 +5,16 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from 'remix'
-import {
-  json,
-  redirect,
-  useActionData,
-  useCatch,
-  useLoaderData,
-  useLocation,
-} from 'remix'
-import invariant from 'tiny-invariant'
+import { useActionData, useCatch, useLoaderData } from 'remix'
 import BackLink from '~/components/back-link'
-import FourOhFour from '~/components/catch'
 import { FullWidthContainer } from '~/components/containers'
 import UserForm from '~/components/user-form'
-import prisma from '~/db.server'
 import createUserStyles from '~/styles/users.new.css'
 import type { Errors } from '~/types'
 
-type LoaderData = {
-  user: User
-}
+type LoaderData = { user: User }
+
+type ActionData = { errors: Errors }
 
 const isUser = (data: unknown): data is LoaderData => {
   if (!data) {
@@ -33,17 +23,14 @@ const isUser = (data: unknown): data is LoaderData => {
   return typeof data === 'object' && Object.keys(data ?? {}).includes('user')
 }
 
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) {
-    return { title: 'Uh-Oh!', description: 'No user found' }
-  }
-  if (isUser(data)) {
-    return {
-      title: data.user.name,
-      description: `Details for user ${data.user.name}`,
-    }
-  }
-  return { title: 'Uh-Oh!', description: 'Something went wrong here' }
+export const meta: MetaFunction = () => {
+  /**
+   * assign approriate meta tags according to the data
+   * returned from the loader
+   *
+   * Hint: make use of `isUser` for type narrowing
+   */
+  return {}
 }
 
 export const links: LinksFunction = () => {
@@ -51,63 +38,52 @@ export const links: LinksFunction = () => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const userId = params.user
-  const formData = await request.formData()
-
-  const name = formData.get('name')
-  const email = formData.get('email')
-
-  const errors: Errors = {}
-
-  if (!name) {
-    errors.name = 'Please provide a name'
-  }
-
-  if (!email) {
-    errors.email = 'Please provide an email'
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return { errors }
-  }
-
-  invariant(typeof name === 'string')
-  invariant(typeof email === 'string')
-
-  await prisma.user.update({
-    where: { id: userId },
-    data: { name: name, email: email },
-  })
-
-  throw redirect(`/users/${userId}`)
+  /**
+   * 1) get the `user` URL param from the function parameter
+   */
+  /**
+   * 2) get the form data from the request
+   */
+  /**
+   * 3) extract the required form fields
+   */
+  /**
+   * 4) run validations on the form data, and return on error
+   */
+  /**
+   * 4) update the user's data
+   */
+  /**
+   * 5) return a redirect
+   */
+  return {}
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const userId = params.user
+export const loader: LoaderFunction = async () => {
+  /**
+   * 1) get the `user` URL param from the function parameter
+   */
+  /**
+   * 2) query the DB for the requested user
+   */
+  /**
+   * 3) if no user exist, throw a not found response
+   */
+  /**
+   * 4) if a user is found, return the user
+   */
 
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  })
-
-  if (!user) {
-    throw json(null, { status: 404 })
-  }
-
-  const loaderData: LoaderData = { user }
-
-  return loaderData
+  return {}
 }
 
 export default function User() {
   const { user } = useLoaderData<LoaderData>()
-  const errors = useActionData<{ errors: Errors }>()
-  const location = useLocation()
+  const errors = useActionData<ActionData>()
 
   return (
     <FullWidthContainer>
       <BackLink />
       <UserForm
-        key={location.key}
         iconUrl={user.avatar}
         initialEmail={user.email}
         initialName={user.name}
@@ -121,18 +97,8 @@ export default function User() {
 export const CatchBoundary = () => {
   const catchData = useCatch()
 
-  switch (catchData.status) {
-    case 404:
-      return (
-        <FourOhFour
-          actionText='Add new User'
-          title='Sorry could not find the user'
-          variant='section'
-        />
-      )
-    default:
-      throw new Error(
-        `Status of ${catchData.status} was not cought at User CatchBoundary`
-      )
-  }
+  /**
+   * handle 404 using `FourOhFour` component
+   */
+  return catchData.data
 }

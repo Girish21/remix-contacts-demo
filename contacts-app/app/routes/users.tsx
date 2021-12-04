@@ -1,11 +1,6 @@
-import {
-  LinksFunction,
-  LoaderFunction,
-  MetaFunction,
-  useTransition,
-} from 'remix'
-import { json, NavLink, Outlet, useCatch, useLoaderData } from 'remix'
-import FourOhFour from '~/components/catch'
+import { internet, name, random } from 'faker'
+import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix'
+import { NavLink, Outlet, useCatch, useLoaderData } from 'remix'
 import {
   Card,
   Emphasis,
@@ -19,10 +14,6 @@ import {
   UsersSection,
 } from '~/components/containers'
 import NewUser from '~/components/new-user'
-import prisma from '~/db.server'
-import usersStyles from '~/styles/users.css'
-import usersLgStyles from '~/styles/users.lg.css'
-import usersMdStyles from '~/styles/users.md.css'
 
 type User = {
   name: string
@@ -35,27 +26,44 @@ type LoaderData = {
   users: User[]
 }
 
+/**
+ * meta function will be used to set the meta tags for the document.
+ *
+ * Let's add the title and description for the route `/users`
+ */
 export const meta: MetaFunction = () => {
-  return {
-    title: 'Users',
-    desctiption: 'Users dashboard page',
-  }
+  return {}
 }
 
+/**
+ * Let's attach the styles required for `/users` route.
+ *
+ * Import the styles from
+ * ~/styles/users.css
+ * ~/styles/users.lg.css (media: '(min-width: 1024px)')
+ * ~/styles/users.md.css (media: '(min-width: 720px)')
+ */
 export const links: LinksFunction = () => {
-  return [
-    { rel: 'stylesheet', href: usersStyles },
-    { rel: 'stylesheet', href: usersMdStyles, media: '(min-width: 720px)' },
-    { rel: 'stylesheet', href: usersLgStyles, media: '(min-width: 1024px)' },
-  ]
+  return []
 }
 
 export const loader: LoaderFunction = async () => {
-  const users = await prisma.user.findMany()
+  const users = Array.from({ length: 5 }).map(() => ({
+    name: name.findName(),
+    email: internet.email(),
+    avatar: `https://avatars.dicebear.com/api/identicon/${Math.random()}.svg`,
+    id: random.alphaNumeric(),
+  }))
 
-  if (!users || users.length === 0) {
-    throw json({ message: 'No user exist' }, { status: 404 })
-  }
+  /**
+   * 1) fetch all the users
+   */
+  /**
+   * 2) handle no users found (404)
+   */
+  /**
+   * 3) return the fetched users
+   */
 
   const loaderData: LoaderData = { users }
 
@@ -64,7 +72,6 @@ export const loader: LoaderFunction = async () => {
 
 export default function Users() {
   const { users } = useLoaderData<LoaderData>()
-  const transition = useTransition()
 
   return (
     <UsersPage>
@@ -74,35 +81,21 @@ export default function Users() {
           <NewUser />
         </SectionHeader>
         <List>
-          {users.map(({ avatar, email, name, id }) => {
-            const optimisticCondition =
-              transition.submission?.action === `/users/${id}` &&
-              (transition.state === 'submitting' ||
-                transition.state === 'loading')
-            const formData = transition.submission?.formData
-            const optimisticName = optimisticCondition
-              ? formData?.get('name')
-              : name
-            const optimisticEmail = optimisticCondition
-              ? formData?.get('email')
-              : email
-
-            return (
-              <NavLink
-                key={id}
-                to={id}
-                className={({ isActive }) =>
-                  isActive ? 'container__link--active' : ''
-                }
-              >
-                <Card>
-                  <Image src={avatar} />
-                  <SecondaryTitle>{optimisticName}</SecondaryTitle>
-                  <Emphasis>{optimisticEmail}</Emphasis>
-                </Card>
-              </NavLink>
-            )
-          })}
+          {users.map(({ avatar, email, name, id }) => (
+            <NavLink
+              key={id}
+              to={id}
+              className={({ isActive }) =>
+                isActive ? 'container__link--active' : ''
+              }
+            >
+              <Card>
+                <Image src={avatar} />
+                <SecondaryTitle>{name}</SecondaryTitle>
+                <Emphasis>{email}</Emphasis>
+              </Card>
+            </NavLink>
+          ))}
         </List>
       </UsersSection>
       <UserEditSection>
@@ -112,15 +105,15 @@ export default function Users() {
   )
 }
 
+/**
+ * the component which is rendered when ever
+ * a response is "thrown" from action or loader
+ */
 export const CatchBoundary = () => {
   const catchData = useCatch()
 
-  switch (catchData.status) {
-    case 404:
-      return <FourOhFour actionText='Add new User' title='No Users!' />
-    default:
-      throw new Error(
-        `Status of ${catchData.status} was not cought at Users CatchBoundary`
-      )
-  }
+  /**
+   * handle 404 using `FourOhFour` component
+   */
+  return catchData.data
 }
