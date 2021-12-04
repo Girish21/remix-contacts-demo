@@ -1,4 +1,4 @@
-import * as React from 'react'
+import useFocus from '~/hooks/useFocus'
 import type { Errors } from '~/types'
 import { Avatar, Error, Field, FieldSet, Section } from './form'
 
@@ -17,13 +17,7 @@ const UserForm = ({
   iconUrl,
   submitbuttonText = 'Create User',
 }: UserFormPops) => {
-  const focusRef = React.useRef<HTMLInputElement | null>(null)
-
-  React.useEffect(() => {
-    if (focusRef.current) {
-      focusRef.current.focus()
-    }
-  }, [])
+  const focusRef = useFocus<HTMLInputElement>()
 
   return (
     <Section>

@@ -15,6 +15,7 @@ import {
 } from '~/components/containers'
 import { Avatar, Error, Field, FieldSet, Section } from '~/components/form'
 import prisma from '~/db.server'
+import useFocus from '~/hooks/useFocus'
 import usersStyles from '~/styles/users.css'
 import usersLgStyles from '~/styles/users.lg.css'
 import usersMdStyles from '~/styles/users.md.css'
@@ -76,6 +77,8 @@ export const loader: LoaderFunction = () => {
 }
 
 export default function NewUser() {
+  const focusRef = useFocus<HTMLInputElement>()
+
   const { iconUrl } = useLoaderData<LoaderData>()
   const actionData = useActionData<{ errors: Errors }>()
   const errors = actionData?.errors
@@ -90,7 +93,7 @@ export default function NewUser() {
             <FieldSet>
               <Field>
                 <label htmlFor='name'>Name</label>
-                <input name='name' id='name' required />
+                <input ref={focusRef} name='name' id='name' required />
                 {errors?.name && <Error>{errors.name}</Error>}
               </Field>
               <Field>
