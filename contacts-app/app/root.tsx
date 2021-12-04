@@ -4,11 +4,7 @@ import { LiveReload, Links, Outlet, Meta, useCatch } from 'remix'
 import globalStyles from '~/styles/global.css'
 import darkStyles from '~/styles/dark.css'
 import fontStyles from '~/styles/font.css'
-import {
-  MessageContainer,
-  PageCenterContainer,
-  Title,
-} from './components/containers'
+import { RootBoundaryContainer, Title } from './components/containers'
 import FourOhFour from './components/catch'
 
 export const links: LinksFunction = () => {
@@ -78,11 +74,9 @@ export const CatchBoundary = () => {
     case 401:
       return (
         <Document title='Not Authorised'>
-          <PageCenterContainer variant='small'>
-            <MessageContainer>
-              <Title>You are not authorised to be here!</Title>
-            </MessageContainer>
-          </PageCenterContainer>
+          <RootBoundaryContainer>
+            <Title>You are not authorised to be here!</Title>
+          </RootBoundaryContainer>
         </Document>
       )
     case 404:
@@ -98,11 +92,9 @@ export const CatchBoundary = () => {
 
   return (
     <Document title={catchData.statusText}>
-      <PageCenterContainer variant='small'>
-        <MessageContainer>
-          <Title>{catchData.statusText}</Title>
-        </MessageContainer>
-      </PageCenterContainer>
+      <RootBoundaryContainer>
+        <Title>{catchData.statusText}</Title>
+      </RootBoundaryContainer>
     </Document>
   )
 }
@@ -110,12 +102,10 @@ export const CatchBoundary = () => {
 export const ErrorBoundary = ({ error }: { error: Error }) => {
   return (
     <Document title='Snap!'>
-      <PageCenterContainer variant='small'>
-        <MessageContainer>
-          <Title>App Error</Title>
-          {error.message}
-        </MessageContainer>
-      </PageCenterContainer>
+      <RootBoundaryContainer>
+        <Title>App Error</Title>
+        {error.message}
+      </RootBoundaryContainer>
     </Document>
   )
 }

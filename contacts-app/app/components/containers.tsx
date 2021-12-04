@@ -24,6 +24,10 @@ const Emphasis: React.FunctionComponent<Never> = ({ children }) => {
   return <em>{children}</em>
 }
 
+const FullWidthContainer: React.FunctionComponent<Never> = ({ children }) => {
+  return <div className='relative w-full' children={children} />
+}
+
 const Image = ({ src }: { src: string }) => {
   return <img className='container__flex--self-center' src={src} alt='' />
 }
@@ -68,8 +72,14 @@ const PageContainer: React.FunctionComponent<Never> = ({ children }) => {
   return <main className='container' children={children} />
 }
 
-const FullWidthContainer: React.FunctionComponent<Never> = ({ children }) => {
-  return <div className='relative w-full' children={children} />
+const RootBoundaryContainer: React.FunctionComponent<Never> = ({
+  children,
+}) => {
+  return (
+    <PageCenterContainer variant='small'>
+      <MessageContainer children={children} />
+    </PageCenterContainer>
+  )
 }
 
 const SecondaryTitle: React.FunctionComponent<Never> = ({ children }) => {
@@ -130,6 +140,7 @@ export {
   MessageContainer,
   PageCenterContainer,
   PageContainer,
+  RootBoundaryContainer,
   FullWidthContainer,
   SecondaryTitle,
   SectionHeader,
