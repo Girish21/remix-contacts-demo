@@ -41,6 +41,12 @@ button {
   color: hsl(var(--color-button));
   font-size: 1.35rem;
   border-radius: 12px;
+  will-change: background-color;
+  transition: background-color 100ms ease-out;
+}
+
+button:hover {
+  background-color: hsl(var(--secondary) / 80%);
 }
 
 button:active,

@@ -1,3 +1,4 @@
+import * as React from 'react'
 import type { Errors } from '~/types'
 import { Avatar, Error, Field, FieldSet, Section } from './form'
 
@@ -16,6 +17,14 @@ const UserForm = ({
   iconUrl,
   submitbuttonText = 'Create User',
 }: UserFormPops) => {
+  const focusRef = React.useRef<HTMLInputElement | null>(null)
+
+  React.useEffect(() => {
+    if (focusRef.current) {
+      focusRef.current.focus()
+    }
+  }, [])
+
   return (
     <Section>
       <form autoComplete='off' method='post'>
@@ -24,6 +33,7 @@ const UserForm = ({
           <Field>
             <label htmlFor='name'>Name</label>
             <input
+              ref={focusRef}
               autoComplete='off'
               id='name'
               name='name'

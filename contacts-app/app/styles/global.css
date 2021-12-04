@@ -340,7 +340,13 @@ li {
   display: flex;
   align-items: center;
   column-gap: 8px;
-  top: -38px;
+  top: -44px;
+}
+
+.container__link--new:focus-visible,
+.container__link--back:focus-visible {
+  border-radius: 4px;
+  box-shadow: var(--ring);
 }
 
 .container__link--new > svg,
