@@ -9,6 +9,8 @@ import FourOhFour from '~/components/catch'
  * added to the page when the route is visited. When navigating
  * away the `<link>` elements will be removed
  *
+ * TODO: 🛠 Tast I
+ *
  * Here we're going to link the global stylesheets and
  * preload custom fonts.
  *
@@ -67,6 +69,8 @@ const Document = ({
 /**
  * Remix uses the default export from the routes module
  * to render when the route matches
+ *
+ * https://remix.run/docs/en/v1/api/conventions#default-export
  */
 export default function App() {
   return (

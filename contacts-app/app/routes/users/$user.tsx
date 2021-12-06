@@ -25,6 +25,8 @@ const isUser = (data: unknown): data is LoaderData => {
 
 export const meta: MetaFunction = () => {
   /**
+   * TODO: 🛠 Tast V - Part 3
+   *
    * assign approriate meta tags according to the data
    * returned from the loader
    *
@@ -37,7 +39,10 @@ export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: createUserStyles }]
 }
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async () => {
+  /*
+   * TODO: 🛠 Tast V - Part 4
+   */
   /**
    * 1) get the `user` URL param from the function parameter
    */
@@ -60,6 +65,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 export const loader: LoaderFunction = async () => {
+  /*
+   * TODO: 🛠 Tast V - Part 1
+   */
   /**
    * 1) get the `user` URL param from the function parameter
    */
@@ -98,7 +106,10 @@ export const CatchBoundary = () => {
   const catchData = useCatch()
 
   /**
+   * TODO: 🛠 Tast V - Part 2
+   *
    * handle 404 using `FourOhFour` component
+   * and variant of type `section`
    */
   return catchData.data
 }

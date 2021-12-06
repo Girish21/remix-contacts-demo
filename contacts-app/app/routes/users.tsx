@@ -27,15 +27,21 @@ type LoaderData = {
 }
 
 /**
+ * TODO: 🛠 Tast III - Part 2
+ *
  * meta function will be used to set the meta tags for the document.
  *
  * Let's add the title and description for the route `/users`
+ *
+ * Refer https://remix.run/docs/en/v1/api/conventions#meta
  */
 export const meta: MetaFunction = () => {
   return {}
 }
 
 /**
+ * TODO: 🛠 Tast III - Part 1
+ *
  * Let's attach the styles required for `/users` route.
  *
  * Import the styles from
@@ -47,6 +53,9 @@ export const links: LinksFunction = () => {
   return []
 }
 
+/**
+ * TODO: 🛠 Tast III - Part 3
+ */
 export const loader: LoaderFunction = async () => {
   const users = Array.from({ length: 5 }).map(() => ({
     name: name.findName(),
@@ -59,10 +68,31 @@ export const loader: LoaderFunction = async () => {
    * 1) fetch all the users
    */
   /**
-   * 2) handle no users found (404)
+   * 2) return the fetched users
    */
+
   /**
-   * 3) return the fetched users
+   * TODO: 🛠 Tast III - Part 4
+   *
+   * 3) handle no users found (404)
+   *
+   * the most common way of handling 404 would be to send a empty response
+   * and have checks in the component to reder different trees according the
+   * data returned
+   *
+   * But there's a more elegant way of doing this in Remix
+   *
+   * "Throw" an actual 404 response to the client, and render
+   * a different fallback according to the status returned
+   * keeping the component clean of unnecessary logic
+   *
+   * We can also "throw" response from a loader/action, and will be
+   * "caught" by the nearest CatchBoundary
+   *
+   * CatchBoundary is an export of the Route Module that catches responses
+   * throw from the loader/action
+   *
+   * https://remix.run/docs/en/v1/api/conventions#throwing-responses-in-loaders
    */
 
   const loaderData: LoaderData = { users }
@@ -108,11 +138,15 @@ export default function Users() {
 /**
  * the component which is rendered when ever
  * a response is "thrown" from action or loader
+ *
+ * https://remix.run/docs/en/v1/api/conventions#catchboundary
  */
 export const CatchBoundary = () => {
   const catchData = useCatch()
 
   /**
+   * TODO: 🛠 Tast III - Part 4
+   *
    * handle 404 using `FourOhFour` component
    */
   return catchData.data

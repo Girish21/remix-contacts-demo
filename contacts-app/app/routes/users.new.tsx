@@ -45,9 +45,13 @@ export const links: LinksFunction = () => {
  *
  * When a action is called, all the loaders of the routes
  * on the screen are called, fetching fresh data from DB!
+ *
+ * https://remix.run/docs/en/v1/api/conventions#action
  */
 export const action: ActionFunction = () => {
   /**
+   * TODO: 🛠 Tast IV - Part 2
+   *
    * let's handle form submission
    */
   /**
@@ -84,11 +88,24 @@ export default function NewUser() {
         <Section>
           <form>
             {/*
+             * TODO: 🛠 Tast IV - Part 1
              * 1) let's make the form submit to be a POST request
              * 2) add `Avatar` component for avatar preview
              * 3) add `FieldSet` component to wrap the form fields
              *   i) create form `Field` for name and email
-             *   ii) show field errors, if exist
+             *   ii) to send the avatar URL back to the server on submission of the form,
+             *       add a `hidden` input inside the form with the value of the avatar URL
+             *       and with a `name` attribute
+             *   iii) show field errors, if exist
+             */}
+            {/*
+             * Example Form Field
+             *
+             * <Field>
+             *  <label htmlFor='name'>Name</label>
+             *  <input id='name' name='name' type='text' />
+             *  {errors.name ? <Error>{errors.name}</Error> : null}
+             * </Field>
              */}
           </form>
         </Section>
