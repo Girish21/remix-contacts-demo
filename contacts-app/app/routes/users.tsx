@@ -1,4 +1,9 @@
-import type { LinksFunction, LoaderFunction, MetaFunction } from 'remix'
+import {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+  useTransition,
+} from 'remix'
 import { json, NavLink, Outlet, useCatch, useLoaderData } from 'remix'
 import FourOhFour from '~/components/catch'
 import {
@@ -59,6 +64,7 @@ export const loader: LoaderFunction = async () => {
 
 export default function Users() {
   const { users } = useLoaderData<LoaderData>()
+  const transition = useTransition()
 
   return (
     <UsersPage>
@@ -68,21 +74,35 @@ export default function Users() {
           <NewUser />
         </SectionHeader>
         <List>
-          {users.map(({ avatar, email, name, id }) => (
-            <NavLink
-              key={id}
-              to={id}
-              className={({ isActive }) =>
-                isActive ? 'container__link--active' : ''
-              }
-            >
-              <Card>
-                <Image src={avatar} />
-                <SecondaryTitle>{name}</SecondaryTitle>
-                <Emphasis>{email}</Emphasis>
-              </Card>
-            </NavLink>
-          ))}
+          {users.map(({ avatar, email, name, id }) => {
+            const optimisticCondition =
+              transition.submission?.action === `/users/${id}` &&
+              (transition.state === 'submitting' ||
+                transition.state === 'loading')
+            const formData = transition.submission?.formData
+            const optimisticName = optimisticCondition
+              ? formData?.get('name')
+              : name
+            const optimisticEmail = optimisticCondition
+              ? formData?.get('email')
+              : email
+
+            return (
+              <NavLink
+                key={id}
+                to={id}
+                className={({ isActive }) =>
+                  isActive ? 'container__link--active' : ''
+                }
+              >
+                <Card>
+                  <Image src={avatar} />
+                  <SecondaryTitle>{optimisticName}</SecondaryTitle>
+                  <Emphasis>{optimisticEmail}</Emphasis>
+                </Card>
+              </NavLink>
+            )
+          })}
         </List>
       </UsersSection>
       <UserEditSection>
