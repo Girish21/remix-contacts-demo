@@ -35,6 +35,8 @@
   --ring-color: var(--primary);
   --ring: 0 0 0 var(--ring-gap) hsl(var(--foreground)),
     0 0 0 calc(var(--ring-width) + var(--ring-gap)) hsl(var(--ring-color));
+  --ring-secondary: 0 0 0 var(--ring-gap) hsl(var(--background)),
+    0 0 0 calc(var(--ring-width) + var(--ring-gap)) hsl(var(--ring-color));
 
   --shadow-color: 211deg 40% 62%;
   --shadow-elevation-low: 0px 0.4px 0.5px hsl(var(--shadow-color) / 0.27),
@@ -347,10 +349,15 @@ li {
   top: -44px;
 }
 
+.container__link:focus-visible {
+  border-radius: 4px;
+  box-shadow: var(--ring);
+}
+
 .container__link--new:focus-visible,
 .container__link--back:focus-visible {
   border-radius: 4px;
-  box-shadow: var(--ring);
+  box-shadow: var(--ring-secondary);
 }
 
 .container__link--new > svg,
