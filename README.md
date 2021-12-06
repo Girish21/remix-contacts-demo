@@ -18,4 +18,4 @@ This tutorial is for anyone exploring Remix and getting comfortable working with
 
 You can find the starter code at [start here](https://github.com/Girish21/remix-contacts-demo/tree/remix-intro-start/contacts-app). README has more information about the tutorial and the order to follow to get the most out of the tutorial.
 
-You can find the finished project [here](https://github.com/Girish21/remix-contacts-demo/tree/remix-intro-end/contacts-app). And you can use this as a reference when working through the tutorial.
+You can find the finished project [here](https://github.com/Girish21/remix-contacts-demo/tree/main/contacts-app). And you can use this as a reference when working through the tutorial.
