@@ -26,14 +26,24 @@ type LoaderData = {
   user: User
 }
 
+const isUser = (data: unknown): data is LoaderData => {
+  if (!data) {
+    return false
+  }
+  return typeof data === 'object' && Object.keys(data ?? {}).includes('user')
+}
+
 export const meta: MetaFunction = ({ data }) => {
   if (!data) {
     return { title: 'Uh-Oh!', description: 'No user found' }
   }
-  return {
-    title: (data as LoaderData).user.name,
-    description: `Details for user ${(data as LoaderData).user.name}`,
+  if (isUser(data)) {
+    return {
+      title: data.user.name,
+      description: `Details for user ${data.user.name}`,
+    }
   }
+  return { title: 'Uh-Oh!', description: 'Something went wrong here' }
 }
 
 export const links: LinksFunction = () => {
@@ -48,8 +58,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const email = formData.get('email')
 
   const errors: Errors = {}
-
-  await new Promise((res) => setTimeout(res, 2000))
 
   if (!name) {
     errors.name = 'Please provide a name'
@@ -82,7 +90,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   })
 
   if (!user) {
-    throw json({ message: 'User not found' }, { status: 404 })
+    throw json(null, { status: 404 })
   }
 
   const loaderData: LoaderData = { user }
