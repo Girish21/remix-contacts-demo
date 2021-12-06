@@ -1,54 +1,24 @@
-# Welcome to Remix!
+# Remix
 
-- [Remix Docs](https://docs.remix.run)
-- [Customer Dashboard](https://remix.run/dashboard)
+Welcome to this tutorial on Remix. We're going to build a small contact management app. This tutorial is designed to get familiar with various APIs and conventions of Remix.
 
-## Development
+> **This tutorial is written in TypeScript. If you are not familiar with TypeScript, you can remove all the TypeScript type definitions and rename all files from `tsx` to `jsx`, and everything will work**
 
-From your terminal:
+## Setup
+
+Remix requires Node version 14 or greater.
 
 ```sh
+git clone git@github.com:Girish21/remix-contacts-demo.git
+cd remix-contacts-demo/contacts-app
+npm install
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+Remix runs on port 3000 by default. Once the development server is ready, you can visit the app on `http://localhost:3000`.
 
-## Deployment
+_If you face any issues with the `remix` package, check if the `postinstall` npm script has run_
 
-First, build your app for production:
+---
 
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `remix build`
-
-- `build/`
-- `public/build/`
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+This is the final code of the tutorial, to follow it from the start head over [here](https://github.com/Girish21/remix-contacts-demo/tree/remix-intro-start/contacts-app)
