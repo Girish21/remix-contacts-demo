@@ -1,5 +1,5 @@
-import { LinksFunction, Scripts } from 'remix'
-import { LiveReload, Links, Outlet, Meta, useCatch } from 'remix'
+import type { LinksFunction } from 'remix'
+import { LiveReload, Links, Outlet, Meta, Scripts, useCatch } from 'remix'
 
 import globalStyles from '~/styles/global.css'
 import darkStyles from '~/styles/dark.css'

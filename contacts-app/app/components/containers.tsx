@@ -1,5 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
+import RefreshIcon from './refresh-icon'
 
 type Never = Record<string, unknown>
 type PageCenterContainerProps = {
@@ -34,6 +35,15 @@ const Image = ({ src }: { src: string }) => {
 
 const List: React.FunctionComponent<Never> = ({ children }) => {
   return <ul children={children} />
+}
+
+const Loader: React.FunctionComponent<Never> = ({ children }) => {
+  return (
+    <div className='container__flex container__flex--center container__flex--gap-2'>
+      <RefreshIcon />
+      {children}
+    </div>
+  )
 }
 
 const MainSection: React.FunctionComponent<Never> = ({ children }) => {
@@ -136,6 +146,7 @@ export {
   Emphasis,
   Image,
   List,
+  Loader,
   MainSection,
   MessageContainer,
   PageCenterContainer,

@@ -224,6 +224,10 @@ li {
   width: 3rem;
 }
 
+.button__icon--spin {
+  animation: both spin 1s infinite;
+}
+
 .button--bounce {
   animation: both bounce 1s infinite;
 }
@@ -385,5 +389,15 @@ li {
   50% {
     transform: translateX(10%);
     animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0);
   }
 }

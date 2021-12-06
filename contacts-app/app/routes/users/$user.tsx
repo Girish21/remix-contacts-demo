@@ -49,6 +49,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const errors: Errors = {}
 
+  await new Promise((res) => setTimeout(res, 2000))
+
   if (!name) {
     errors.name = 'Please provide a name'
   }
