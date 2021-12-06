@@ -459,6 +459,16 @@ const optimisticCondition =
 
 Since we have access to the `id` of the user detail and know the URL of the action, we can compare the `action` value with the constructed URL with the `id` and only update the item that requires an update.
 
+> With the above optimistic update condition, you will notice a slight flicker with the optimistically updated UI when Remix refetches the data after mutation. That is due to the `loading` state.
+>
+> Transition hooks state flow is as follows: idle -> submitting -> loading -> idle
+>
+> Thus, we have to have the optimistic update around till the data is refetched.
+>
+> Update the optimistic condition as follows
+>
+> const optimisticCondition = transition.submission?.action === `/users/${id}` && (transition.state === 'submitting' || transition.state === 'loading')
+
 Vola, we got a very elegant user experience without having to juggle between various states, not set up a global store, not having to set up a client-side "server state management" library. And all of this will still work with JavaScript disabled 🤯.
 
 Alright, we have come to the end of this tutorial on Remix. Hopefully, this gave you a good idea about Remix and helped you get started with it and build awesome apps with it!
