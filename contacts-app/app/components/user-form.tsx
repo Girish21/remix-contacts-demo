@@ -1,5 +1,6 @@
-import { Form, useTransition } from 'remix'
+import { Form } from 'remix'
 import useFocus from '~/hooks/useFocus'
+import useInTransition from '~/hooks/useInTransition'
 import type { Errors } from '~/types'
 import { Loader } from './containers'
 import { Avatar, Error, Field, FieldSet, Section } from './form'
@@ -20,13 +21,13 @@ const UserForm = ({
   submitbuttonText = 'Create User',
 }: UserFormPops) => {
   const focusRef = useFocus<HTMLInputElement>()
-  const transition = useTransition()
+  const inTransition = useInTransition()
 
   return (
     <Section>
       <Form autoComplete='off' method='post'>
         <Avatar iconUrl={iconUrl} />
-        <FieldSet>
+        <FieldSet disabled={inTransition}>
           <Field>
             <label htmlFor='name'>Name</label>
             <input
@@ -53,7 +54,7 @@ const UserForm = ({
           </Field>
           <input hidden defaultValue={iconUrl} name='avatar' />
           <button>
-            {transition.state === 'submitting' ? (
+            {inTransition ? (
               <Loader>{submitbuttonText}</Loader>
             ) : (
               <>{submitbuttonText}</>

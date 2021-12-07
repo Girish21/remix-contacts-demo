@@ -1,13 +1,9 @@
-import type React from 'react'
+import type * as React from 'react'
 
 type Never = Record<string, unknown>
 
 type AvatarProps = {
   iconUrl: string
-}
-
-type ErrorProps = {
-  error?: string
 }
 
 const Avatar = ({ iconUrl }: AvatarProps) => {
@@ -23,7 +19,7 @@ const Error: React.FunctionComponent<Never> = ({ children }) => {
 }
 
 const FieldSet: React.FunctionComponent<
-  React.HTMLAttributes<HTMLFieldSetElement>
+  React.FieldsetHTMLAttributes<HTMLFieldSetElement>
 > = (props) => {
   return (
     <fieldset

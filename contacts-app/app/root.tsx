@@ -52,8 +52,8 @@ const Document = ({
       </head>
       <body>
         {children}
-        {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
         <Scripts />
+        {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
       </body>
     </html>
   )

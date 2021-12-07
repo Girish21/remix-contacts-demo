@@ -1,21 +1,21 @@
-import {
+import type {
   ActionFunction,
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-  redirect,
-  useActionData,
-  useLoaderData,
 } from 'remix'
+import { Form, redirect, useActionData, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 import BackLink from '~/components/back-link'
 import {
   FullWidthContainer,
+  Loader,
   PageCenterContainer,
 } from '~/components/containers'
 import { Avatar, Error, Field, FieldSet, Section } from '~/components/form'
 import prisma from '~/db.server'
 import useFocus from '~/hooks/useFocus'
+import useInTransition from '~/hooks/useInTransition'
 import usersStyles from '~/styles/users.css'
 import usersLgStyles from '~/styles/users.lg.css'
 import usersMdStyles from '~/styles/users.md.css'
@@ -83,14 +83,16 @@ export default function NewUser() {
   const actionData = useActionData<{ errors: Errors }>()
   const errors = actionData?.errors
 
+  const inTransition = useInTransition()
+
   return (
     <PageCenterContainer>
       <FullWidthContainer>
         <BackLink to='/users' />
         <Section>
-          <form method='post' autoComplete='off'>
+          <Form method='post' autoComplete='off'>
             <Avatar iconUrl={iconUrl} />
-            <FieldSet>
+            <FieldSet disabled={inTransition}>
               <Field>
                 <label htmlFor='name'>Name</label>
                 <input ref={focusRef} name='name' id='name' required />
@@ -102,9 +104,11 @@ export default function NewUser() {
                 {errors?.email && <Error>{errors.email}</Error>}
               </Field>
               <input hidden name='avatar' defaultValue={iconUrl} />
-              <button>Create User</button>
+              <button>
+                {inTransition ? <Loader>Create User</Loader> : <>Create User</>}
+              </button>
             </FieldSet>
-          </form>
+          </Form>
         </Section>
       </FullWidthContainer>
     </PageCenterContainer>
