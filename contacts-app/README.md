@@ -4,6 +4,8 @@ Welcome to this tutorial on Remix. We're going to build a small contact manageme
 
 > **This tutorial is written in TypeScript. If you are not familiar with TypeScript, you can remove all the TypeScript type definitions and rename all files from `tsx` to `jsx`, and everything will work**
 
+_final project can be found [here](https://github.com/Girish21/remix-contacts-demo/tree/main/contacts-app)_
+
 ## Setup
 
 Remix requires Node version 14 or greater.
