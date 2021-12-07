@@ -360,7 +360,7 @@ import { Scripts } from 'remix'
 const Document = ({ children, title }) => {
   // ...
 
-  ;<body>
+  <body>
     {children}
     <Scripts />
     {process.env.NODE_ENV === 'development' ? <LiveReload /> : null}
@@ -370,7 +370,28 @@ const Document = ({ children, title }) => {
 }
 ```
 
-Try clicking through the application nothing should have changed, and all the interactions should work fine.
+All the form interactions should work as expected before enabling JavaScript, but one interaction breaks. In the `/users` route when we try clicking through various users, we can notice that the `form` will not get updated. Why is this? When we initialise `input` using the [`defaultValue`](https://reactjs.org/docs/uncontrolled-components.html#default-values) prop, React will not control the input and, the `input` will be an [`uncontrolled component`](https://reactjs.org/docs/uncontrolled-components.html). When we initialise an uncontrolled component with defaultValue when the initial value changes, React will not rerender the component with the new value. The component is not controlled by React and is controlled by the DOM. 
+
+To trigger a rerender, we can use the `key` prop. When `key` changes, React will unmount and re-mount the component with the updated initial values.
+
+What could be the appropriate key here? We can either use the route param from the `useParams()` hook or the location key from `useLocation()` hook. Let us use `useLocation` here.
+
+```jsx
+// ~/routes/user/$user.tsx
+
+export default function() {
+  const {key} = useLocation()
+
+  // ...
+
+  <UserForm 
+    key={key}
+    // ...
+  />
+}
+```
+
+When the location changes, the form will be un-mounted and remounted because the key has changed.
 
 ### Form Submission indicator
 
